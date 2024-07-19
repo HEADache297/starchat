@@ -15,7 +15,7 @@ def sign_up(request):
             form.save()
             print(form.cleaned_data.get('email'))
             print('form save')
-            return redirect('hhome')
+            return redirect('chats')
     else:
         form = SignUpForm()
         
@@ -39,7 +39,13 @@ def login(request):
             if user is not None:
                 auth_login(request, user)
                 print(user)
-                return redirect('hhome')
+                return redirect('chats')
     else: 
         form = LoginForm()
     return render(request, 'auth/login.html', {'form' : form})
+
+def logout(request):
+    from django.contrib.auth import logout
+    logout(request)
+
+    return redirect('login')

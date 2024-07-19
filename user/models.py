@@ -5,13 +5,6 @@ from django.utils.text import slugify
 
 
 
-class User():
-    email=models.EmailField(null=False, blank=False, unique=True)
-    username = models.CharField(null=False, max_length=50, unique=True)
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        
 class Profile(models.Model):
     User=models.TextField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -25,4 +18,4 @@ class Profile(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.user.name}"
+        return f"{self.slug} {self.user.name}"
