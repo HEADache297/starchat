@@ -14,5 +14,5 @@ class SignUpForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
         
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(max_length=255)
-    password = forms.CharField(max_length=255)
+    username = forms.CharField(max_length=255, widget=Input(attrs={'class': 'm-3 h-12 rounded-lg p-2 bg-white text-black', 'placeholder': 'Username'}))
+    password = forms.CharField(max_length=255, widget=PasswordInput(attrs={'class': 'm-3 h-12 rounded-lg p-2 bg-white text-black', 'placeholder': 'Email'}))
