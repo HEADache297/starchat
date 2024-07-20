@@ -56,8 +56,7 @@ def logout(request):
 
     return redirect('login')
 
-
+@login_required
 def profile(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
-    print('asdasd')
     return render(request, 'profile/profile.html', {'profile':profile})
