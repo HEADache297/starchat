@@ -15,7 +15,7 @@ class SignUpForm(UserCreationForm):
         
 class LoginForm(AuthenticationForm):
     username = forms.CharField(max_length=255, widget=Input(attrs={'class': 'm-3 h-12 rounded-lg p-2 bg-white text-black', 'placeholder': 'Username'}))
-    password = forms.CharField(max_length=255, widget=PasswordInput(attrs={'class': 'm-3 h-12 rounded-lg p-2 bg-white text-black', 'placeholder': 'Email'}))
+    password = forms.CharField(max_length=255, widget=PasswordInput(attrs={'class': 'm-3 h-12 rounded-lg p-2 bg-white text-black', 'placeholder': 'Password'}))
 
 
 class UpdateUserForm(forms.ModelForm):
