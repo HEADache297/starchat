@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'compressor',
+    'user',
 ]
 
 COMPRESS_ROOT = BASE_DIR / 'static'
