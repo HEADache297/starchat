@@ -56,6 +56,9 @@ def logout(request):
 
     return redirect('login')
 
+def profile(request):
+    return render(request, 'profile/profile.html')
+
 
 #@login_required
 def profile(request, slug):
