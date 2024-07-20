@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect,HttpResponse
 from .forms import SignUpForm, LoginForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
+from django.shortcuts import get_object_or_404
+from .models import Profile
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -13,9 +16,12 @@ def sign_up(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
+            
+            profile = Profile(user=user)
+            profile.save()
             print(form.cleaned_data.get('email'))
             print('form save')
-            return redirect('chats')
+            return redirect('hhome')
     else:
         form = SignUpForm()
         
@@ -39,7 +45,7 @@ def login(request):
             if user is not None:
                 auth_login(request, user)
                 print(user)
-                return redirect('chats')
+                return redirect('hhome')
     else: 
         form = LoginForm()
     return render(request, 'auth/login.html', {'form' : form})
@@ -49,3 +55,9 @@ def logout(request):
     logout(request)
 
     return redirect('login')
+
+
+#@login_required
+def profile(request, slug):
+    profile = get_object_or_404(Profile, slug=slug)
+    return render(request, 'users/profile.html', {'profile':profile})
