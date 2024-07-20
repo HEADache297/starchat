@@ -5,6 +5,7 @@ from django.contrib.auth import login as auth_login
 from django.shortcuts import get_object_or_404
 from .models import Profile
 from django.contrib.auth.decorators import login_required
+from .forms import ChangeImageForm
 
 # Create your views here.
 
@@ -59,5 +60,10 @@ def logout(request):
 
 def profile(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
-    print('asdasd')
-    return render(request, 'profile/profile.html', {'profile':profile})
+    form=ChangeImageForm()
+    if request.method == "POST":
+        form = ChangeImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile.image = form.cleaned_data.get('image')
+            profile.save()
+    return render(request, 'profile/profile.html', {'profile':profile,'form':form})
