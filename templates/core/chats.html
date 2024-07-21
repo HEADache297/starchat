@@ -62,22 +62,7 @@
                 </div>
                 
 
-                {% comment %} 
-                
-                            <div class="font-bold">
-                                {{ message.content }}
-                            </div>
-                            <div class="text-gray-600">
-                                Last Message
-                            </div>
-                        {% else %}
-                            <div class="font-bold">
-                                {{ message.content }}
-                            </div>
-                            <div class="text-gray-600">
-                                Last Message
-                            </div>
-                        {% endif %} {% endcomment %}
+
 
 
 
@@ -86,23 +71,20 @@
         </div>
         <div class="bg-white w-2/3">
             <div class="w-full rounded-lg p-4 flex flex-col justify-between h-full">
-                <div class="flex flex-col-reverse overflow-y-auto p-2 space-y-4 bg-white h-full rounded-lg">
+                <ul id='chat_messages' class="flex flex-col-reverse overflow-y-auto p-2 space-y-4 bg-white h-full rounded-lg">
                     {% for message in chat_messages reversed %}
-                        <div id="chat_messages" class="my-2">
-                            {% include 'core/chat_message.html' %}
-                        </div>
-                    {% endfor %}
-                </div>
-                <form class="mt-4 flex bottom-0 inset-x-0 mb-16"
-                    hx-post="{% url 'chats' %}"
-                    hx-target='#chat_messages'
-                    hx-swap='beforeend'
-                    hx-on::after-request="this.reset()"
-                    id="inputForm">
-                    {% comment %} <input id="messageInput" type="text" placeholder="Type a message..." class="flex-grow shadow-lg border rounded-l-lg p-2 outline-none"> {% endcomment %}
+                        {% include 'core/chat_message.html' %}
+                    {% endfor %} 
+                </ul>
+                <form class="mt-4 flex bottom-0 inset-x-0 mb-16" 
+                    hx-ext="ws"
+                    ws-connect="/ws/chatroom/chat1"
+                    ws-send
+                    hx-on::after-request="this.reset()">
+                    {% comment %} <input id="messa geInput" type="text" placeholder="Type a message..." class="flex-grow shadow-lg border rounded-l-lg p-2 outline-none"> {% endcomment %}
                     {% csrf_token %} 
                     {{ form }}
-                    <button type='submit' class="bg-yellow-300 text-black p-2 rounded-r-lg shadow-lg w-1/6"><i class="fa-solid fa-paper-plane fa-lg text-black"></i></button>
+                    <button class="bg-yellow-300 text-black p-2 rounded-r-lg shadow-lg">Send</button>
                 </form>
             </div>  
         </div>
