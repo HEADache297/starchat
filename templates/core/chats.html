@@ -3,7 +3,14 @@
 {% block content %}
     <div class="flex flex-row h-full">
         <div class="w-1/3 p-4 mb-16">
-            <div class="bg-white h-full overflow-scroll">
+            <form method="post" id="chatSearch" class="mb-4 w-full">
+                {% csrf_token %}
+                <div class="flex" style="padding-right: 10px;">
+                    <input id="messageInput" type="search" placeholder="Search a user" aria-label="Search" name="search" class="flex-grow w-5/6 shadow-lg border rounded-l-lg p-2 outline-none">
+                    <button type="submit" class="bg-yellow-300 min-w-16 text-black p-2 rounded-r-lg shadow-lg w-1/6">Search</button>
+                </div>
+            </form>
+            <div class="bg-white h-full overflow-scroll" id="chatList">
                 <div class="bg-yellow-300 p-4 text-black rounded-lg shadow-lg flex flex-row mb-4">
                     <div class="bg-black rounded-full flex justify-center content-center text-white p-4">
                         img
@@ -75,6 +82,7 @@
 
 
             </div>
+            <div class="bg-white h-full overflow-scroll hidden" id="chatSearchList"></div>
         </div>
         <div class="bg-white w-2/3">
             <div class="w-full rounded-lg p-4 flex flex-col justify-between h-full">
@@ -106,4 +114,31 @@
             </div>  
         </div>
     </div>
+
+<script type="text/javascript">
+    $('#chatSearch').submit(function (event) {
+        event.preventDefault()
+        $('#chatList').addClass('hidden')
+        $('#chatSearchList').removeClass('hidden')
+        let formData = new FormData(this)
+
+        $.ajax({
+            url: "{% url 'chatSearch' %}",
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log('success', data)
+                $('#chatSearchList').empty()
+                $('#chatSearchList').prepend(data.html)
+                $('form')[0].reset()
+            },
+            error: function (data) {
+                console.log('error', data)
+            }
+        })
+    })
+</script>
+
 {% endblock content %}

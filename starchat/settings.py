@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'compressor',
+    'user',
     'chats',
 ]
 
@@ -136,3 +137,6 @@ MEDIA_ROOT = os.path.join(STATIC_URL, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/login'
+LOGIN_URL = '/login'

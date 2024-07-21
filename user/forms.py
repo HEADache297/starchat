@@ -15,4 +15,15 @@ class SignUpForm(UserCreationForm):
         
 class LoginForm(AuthenticationForm):
     username = forms.CharField(max_length=255, widget=Input(attrs={'class': 'm-3 h-12 rounded-lg p-2 bg-white text-black', 'placeholder': 'Username'}))
-    password = forms.CharField(max_length=255, widget=PasswordInput(attrs={'class': 'm-3 h-12 rounded-lg p-2 bg-white text-black', 'placeholder': 'Email'}))
+    password = forms.CharField(max_length=255, widget=PasswordInput(attrs={'class': 'm-3 h-12 rounded-lg p-2 bg-white text-black', 'placeholder': 'Password'}))
+
+
+'''class UpdateUserForm(forms.ModelForm):
+    username = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']'''
+class ChangeImageForm(forms.Form):
+    image = forms.ImageField()
