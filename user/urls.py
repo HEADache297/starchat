@@ -9,4 +9,5 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('profile/<slug:slug>', views.profile, name='profile'),
+    path('activate/<uid>/<token>', views.activate_user, name='activate_user'),
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
