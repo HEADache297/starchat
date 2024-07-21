@@ -7,19 +7,27 @@ from .forms import MessagesForm
 
 @login_required
 def chat_view(request):
-    chat_room = get_object_or_404(ChatRoom)
+    chat_room = get_object_or_404(ChatRoom, chat_name = 'chat1')
     chat_messages = chat_room.chat_messages.all()
     
     form = MessagesForm()
     
     if request.method == 'POST':
+        print(request)
         form = MessagesForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
             message.author = request.user
             message.chat = chat_room
             message.save()
+            
+            context = {
+                'message' : message,
+                'user' : request.user
+            }
+            
             print('message create')
+            return render(request, 'core/chat_message_a.html', context)
         else:
             form = MessagesForm()
             
