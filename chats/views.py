@@ -8,7 +8,7 @@ from .forms import MessagesForm
 @login_required
 def chat_view(request):
     chat_room = get_object_or_404(ChatRoom)
-    chat_messages = chat_room.chat_messages.all()[:30]
+    chat_messages = chat_room.chat_messages.all()
     
     form = MessagesForm()
     
