@@ -12,24 +12,24 @@ def chat_view(request):
     
     form = MessagesForm()
     
-    if request.method == 'POST':
-        print(request)
-        form = MessagesForm(request.POST)
-        if form.is_valid():
-            message = form.save(commit=False)
-            message.author = request.user
-            message.chat = chat_room
-            message.save()
+    # if request.method == 'POST':
+    #     print(request)
+    #     form = MessagesForm(request.POST)
+    #     if form.is_valid():
+    #         message = form.save(commit=False)
+    #         message.author = request.user
+    #         message.chat = chat_room
+    #         message.save()
             
-            context = {
-                'message' : message,
-                'user' : request.user
-            }
+    #         context = {
+    #             'message' : message,
+    #             'user' : request.user
+    #         }
             
-            print('message create')
-            return render(request, 'core/chat_message_a.html', context)
-        else:
-            form = MessagesForm()
+    #         print('message create')
+    #         return render(request, 'core/chat_message_a.html', context)
+    #     else:
+    #         form = MessagesForm()
             
     return render(request, 'core/chats.html', {'chat_messages' : chat_messages, 'chat_room' : chat_room, 'form' : form})
 
