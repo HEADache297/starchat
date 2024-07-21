@@ -10,13 +10,14 @@
     {% compress css %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}" />
     {% endcompress %}
+    <script src="https://kit.fontawesome.com/e3853545f7.js" crossorigin="anonymous"></script>
     <title>Profile</title>
 </head>
 
 <body class="overflow-hidden">
     <a href="{% url 'chats' %}" class="fixed">
         <div class="bg-yellow-300 rounded-full m-2 p-2 w-12 h-12 flex justify-center items-center">
-            < 
+            <i class="fa-solid fa-arrow-left fa-lg text-black"></i>
         </div>
     </a>
 
@@ -39,7 +40,7 @@
                     id="formButton" onclick="openModal('modelConfirm')">Change Image</button>
                 <div class="flex justify-between">
                     <div class="text-sm mt-4">{{ profile.user.email }}</div>
-                    <a href="{% url 'logout' %}" class="text-red-600 mt-4 underline">Logout</a>
+                    <a href="{% url 'logout' %}" class="text-red-600 mt-4 underline"><i class="fa-solid fa-right-to-bracket fa-lg"></i></a>
                 </div> 
             </div>
         </div>
