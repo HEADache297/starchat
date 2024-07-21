@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
     'compressor',
     'user',
+    'chats',
 ]
 
 COMPRESS_ROOT = BASE_DIR / 'static'
