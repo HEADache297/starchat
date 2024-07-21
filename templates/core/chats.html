@@ -7,7 +7,7 @@
                 {% csrf_token %}
                 <div class="flex" style="padding-right: 10px;">
                     <input id="messageInput" type="search" placeholder="Search a user" aria-label="Search" name="search" class="flex-grow w-5/6 shadow-lg border rounded-l-lg p-2 outline-none">
-                    <button type="submit" class="bg-yellow-300 min-w-16 text-black p-2 rounded-r-lg shadow-lg w-1/6">Search</button>
+                    <button type="submit" class="bg-yellow-300 min-w-16 text-black p-2 rounded-r-lg shadow-lg w-1/6"><i class="fa-solid fa-magnifying-glass fa-rotate-90 text-black fa-lg"></i></button>
                 </div>
             </form>
             <div class="bg-white h-full overflow-scroll" id="chatList">
@@ -91,6 +91,7 @@
     </div>
 
 <script type="text/javascript">
+
     $(document).ready(function() {
         $('#id_content').parent().addClass('w-full')
 
