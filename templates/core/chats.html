@@ -98,34 +98,38 @@
                     {% comment %} <input id="messageInput" type="text" placeholder="Type a message..." class="flex-grow shadow-lg border rounded-l-lg p-2 outline-none"> {% endcomment %}
                     {% csrf_token %} 
                     {{ form }}
-                    <button type='submit' class="bg-yellow-300 text-black p-2 rounded-r-lg shadow-lg">Send</button>
+                    <button onclick="sendMessage()" class="bg-yellow-300 text-black p-2 rounded-r-lg shadow-lg">Send</button>
                 </form>
             </div>  
         </div>
     </div>
 
 <script type="text/javascript">
-    $('#chatSearch').submit(function (event) {
-        event.preventDefault()
-        $('#chatList').addClass('hidden')
-        $('#chatSearchList').removeClass('hidden')
-        let formData = new FormData(this)
+    $(document).ready(function() {
+        $('#id_content').parent().addClass('w-full')
 
-        $.ajax({
-            url: "{% url 'chatSearch' %}",
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                console.log('success', data)
-                $('#chatSearchList').empty()
-                $('#chatSearchList').prepend(data.html)
-                $('form')[0].reset()
-            },
-            error: function (data) {
-                console.log('error', data)
-            }
+        $('#chatSearch').submit(function (event) {
+            event.preventDefault()
+            $('#chatList').addClass('hidden')
+            $('#chatSearchList').removeClass('hidden')
+            let formData = new FormData(this)
+    
+            $.ajax({
+                url: "{% url 'chatSearch' %}",
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log('success', data)
+                    $('#chatSearchList').empty()
+                    $('#chatSearchList').prepend(data.html)
+                    $('form')[0].reset()
+                },
+                error: function (data) {
+                    console.log('error', data)
+                }
+            })
         })
     })
 </script>
