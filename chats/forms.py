@@ -11,5 +11,5 @@ class MessagesForm(forms.ModelForm):
         model = Messages
         fields = ['content']
         widgets = {
-            'content' : forms.TextInput(attrs={'label': ' ', 'placeholder' : 'Type a message...', 'class' : 'w-full border-r-0 flex-grow shadow-lg border rounded-l-lg p-2 outline-none', 'id': 'inputt'})
+            'content' : forms.TextInput(attrs={'label': ' ', 'placeholder' : 'Type a message...', 'class' : 'w-full flex-grow shadow-lg border rounded-l-lg p-2 outline-none'})
         }

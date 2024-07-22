@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,SetPasswordForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,SetPasswordForm,PasswordResetForm
 from django.contrib.auth.models import User
 from django.forms.widgets import Input, EmailInput, PasswordInput
 
@@ -34,3 +34,5 @@ class UpdatePasswordForm(SetPasswordForm):
         model=User
         fields= ['new_password1', 'new_password2']
 
+class ResetPasswordForm(PasswordResetForm):
+    username=forms.CharField(label='Username', required=True, min_length=3)

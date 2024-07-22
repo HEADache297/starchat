@@ -1,15 +1,15 @@
 
 {% if message.author == user %}
-<div class="flex justify-end w-full h-auto">
-    <div class="flex flex-col w-auto h-auto">
-        <div class="bg-yellow-300 p-2 rounded-lg shadow-lg max-w-80 break-words">{{ message.content }}</div>
+<div class="flex justify-end w-full">
+    <div class="flex flex-col w-auto">
+        <div class="bg-yellow-300 p-2 rounded-lg shadow-lg min-w-16">{{ message.content }}</div>
         <div class="text-gray-600 text-sm flex justify-end">{{ message.created }}</div>
     </div>
 </div>       
 {% else %}   
 <div class="flex justify-start w-full">
     <div class="flex flex-col w-auto">
-        <div class="bg-black text-white p-2 rounded-lg shadow-lg max-w-80 h-auto">{{ message.content }}</div>
+        <div class="bg-black text-white p-2 rounded-lg shadow-lg min-w-16">{{ message.content }}</div>
         <div class="text-gray-600 text-sm">{{ message.created }}</div>
     </div>
 </div>    

@@ -136,3 +136,56 @@ def change_password(request):
                     messages.error(request, error)
 
     return render(request, 'users/change_password.html', {'form': form})
+
+
+
+def reset_password(request):
+    from .forms import ResetPasswordForm
+    form = ResetPasswordForm()
+    from django.contrib.auth.models import User
+
+    if request.method == 'POST':
+        form = ResetPasswordForm(request.POST)
+        if form.is_valid():
+            user_email = form.cleaned_data.get('email')
+            user_username = form.cleaned_data.get('username')
+
+            user = User.objects.filter(email=user_email, username=user_username).first()
+
+            if user:
+                email = create_email(
+                    request,
+                    user,
+                    'Reset Your Password',
+                    'users/password_reset.html'
+
+                )
+
+                if email.send():
+                    print('ok')
+                else:
+                    print('notok')
+                return redirect('login')
+
+            else:
+                messages.error(request, 'User with provided email and username not found!')
+
+    return render(request, 'users/change_password.html', {'form': form})
+
+
+def reset_password_confirm(request, uid, token):
+    from django.utils.http import urlsafe_base64_decode
+    from django.contrib.auth import login
+    from django.utils.encoding import force_str
+    from .token import account_activation_token
+
+    try:
+        from django.contrib.auth.models import User
+        uid = force_str(urlsafe_base64_decode(uid))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user and account_activation_token.check_token(user, token):
+        login(request, user)
+        return redirect('reset_user_password')
