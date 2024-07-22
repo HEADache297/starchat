@@ -38,6 +38,9 @@
                 <button type="submit" value="Submit"
                     class="text-black bg-white hover:bg-black hover:text-white font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center"
                     id="formButton" onclick="openModal('modelConfirm')">Change Image</button>
+                <button type="submit" value="Submit"
+                    class="text-black bg-white hover:bg-black hover:text-white font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center"
+                 > <a href="{% url  'change_user_password' %}">Change Password</a></button>
                 <div class="flex justify-between">
                     <div class="text-sm mt-4">{{ profile.user.email }}</div>
                     <a href="{% url 'logout' %}" class="text-red-600 mt-4 underline"><i class="fa-solid fa-right-to-bracket fa-lg"></i></a>

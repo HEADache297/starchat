@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,SetPasswordForm
 from django.contrib.auth.models import User
 from django.forms.widgets import Input, EmailInput, PasswordInput
 
@@ -27,3 +27,10 @@ class LoginForm(AuthenticationForm):
         fields = ['username', 'email']'''
 class ChangeImageForm(forms.Form):
     image = forms.ImageField()
+
+
+class UpdatePasswordForm(SetPasswordForm):
+    class Meta:
+        model=User
+        fields= ['new_password1', 'new_password2']
+
