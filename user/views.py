@@ -115,7 +115,7 @@ def activate_user(request, uid, token):
         user.is_active = True
         user.save()
         messages.success(request, "Your account has been activated successfully!")
-        redirect('/login')
+        redirect('login')
     else:
         messages.success(request, "Invalid activation link")
     return redirect('login')
@@ -168,7 +168,7 @@ def reset_password(request):
                 return redirect('login')
 
             else:
-                messages.error(request, 'User with provided email and username not found!')
+                print('User with provided email and username not found!')
 
     return render(request, 'users/change_password.html', {'form': form})
 
@@ -188,4 +188,4 @@ def reset_password_confirm(request, uid, token):
 
     if user and account_activation_token.check_token(user, token):
         login(request, user)
-        return redirect('reset_user_password')
+        return redirect('chats')

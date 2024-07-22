@@ -45,9 +45,6 @@ INSTALLED_APPS = [
     'compressor',
     'user',
     'chats',
-    
-    'crispy_forms',
-    'crispy_tailwind',
 ]
 
 COMPRESS_ROOT = BASE_DIR / 'static'
