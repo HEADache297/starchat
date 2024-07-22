@@ -1,14 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
+import shortuuid
 
 # Create your models here.
 
 class ChatRoom(models.Model):
-    chat_name = models.CharField(max_length=244, unique=True)
-    user_online = models.ManyToManyField(User, related_name='user_in_online', blank=True)
-    
-    def __ste__(self):
-        return self.group_chat
+    group_name = models.CharField(max_length=128, unique=True, blank=True, default=shortuuid.uuid)
+    users_online = models.ManyToManyField(User, related_name='online_in_groups', blank=True)
+    members = models.ManyToManyField(User, related_name='chat_groups', blank=True)
+    is_private = models.BooleanField(default=False)
+        
+    def __str__(self):
+        return self.group_name
     
 class Messages(models.Model):
     chat = models.ForeignKey(ChatRoom, on_delete=models.CASCADE, related_name='chat_messages')

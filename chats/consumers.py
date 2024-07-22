@@ -9,14 +9,14 @@ class ChatConsumer(WebsocketConsumer):
     def connect(self):
         self.user = self.scope['user']
         self.chatroom_name = self.scope['url_route']['kwargs']['chatroom_name']
-        self.chatroom = get_object_or_404(ChatRoom, chat_name=self.chatroom_name)
+        self.chatroom = get_object_or_404(ChatRoom, group_name=self.chatroom_name)
         
         async_to_sync(self.channel_layer.group_add)(
             self.chatroom_name, self.channel_name
         )
         
-        if self.user not in self.chatroom.user_online.all():
-            self.chatroom.user_online.add(self.user)
+        if self.user not in self.chatroom.users_online.all():
+            self.chatroom.users_online.add(self.user)
             self.update_online_user()
         
         self.accept()
@@ -27,8 +27,8 @@ class ChatConsumer(WebsocketConsumer):
             self.chatroom_name, self.channel_name
         )
         
-        if self.user in self.chatroom.user_online.all():
-            self.chatroom.user_online.remove(self.user)
+        if self.user in self.chatroom.users_online.all():
+            self.chatroom.users_online.remove(self.user)
             self.update_online_user()
         
     
@@ -61,7 +61,7 @@ class ChatConsumer(WebsocketConsumer):
         self.send(text_data=html)
         
     def update_online_user(self):
-        online_users = self.chatroom.user_online.count() -1
+        online_users = self.chatroom.users_online.count() -1
         
         event = {
             'type' : 'online_users_handler',

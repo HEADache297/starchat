@@ -10,20 +10,38 @@
                     <button type="submit" class="bg-yellow-300 min-w-16 text-black p-2 rounded-r-lg shadow-lg w-1/6"><i class="fa-solid fa-magnifying-glass fa-rotate-90 text-black fa-lg"></i></button>
                 </div>
             </form>
-            <div class="bg-white h-full overflow-scroll" id="chatList">
- 
+            <div class="bg-white h-full overflow-scroll" id="chatList"> 
                 <div class="bg-yellow-300 p-4 text-black rounded-lg shadow-lg flex flex-row mb-4">
                     <div class="bg-black rounded-full flex justify-center content-center text-white p-4">
                         img
                     </div>
                     <div class="flex flex-col ml-2 justify-center">
-                        {% if chat_room %}
-                            {{ chat_room.chat_name }}
+                        {% if chat_group %}
+                            {{ chat_group.group_name }}
                         {% endif %}
                         <div id="online-icon"></div>
                     </div>
                 </div>
-                
+
+                {% for chatroom in user.chat_groups.all %}
+                    {% if chatroom.is_private %}
+                        {% for member in chatroom.members.all %}
+                            {% if member != user %}
+                            <a href="{% url 'start-chat' member.username %}"> 
+                            <div class="bg-yellow-300 p-4 text-black rounded-lg shadow-lg flex flex-row mb-4">
+                                <div class="bg-black rounded-full flex justify-center content-center text-white p-4">
+                                    img
+                                </div>
+                                <div class="flex flex-col ml-2 justify-center">
+                                    {{ member.username }}
+                                </div>
+                            </div>
+                            </a>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+
 
 
 
@@ -41,7 +59,7 @@
                 </ul>
                 <form class="mt-4 flex bottom-0 inset-x-0 mb-16" 
                     hx-ext="ws"
-                    ws-connect="/ws/chatroom/chat1"
+                    ws-connect="/ws/chatroom/{{ chatroom_name }}"
                     ws-send
                     hx-on::after-request="this.reset()">
                     {% comment %} <input id="messa geInput" type="text" placeholder="Type a message..." class="flex-grow shadow-lg border rounded-l-lg p-2 outline-none"> {% endcomment %}

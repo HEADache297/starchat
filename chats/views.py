@@ -1,37 +1,47 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from .models import ChatRoom, Messages
 from .forms import MessagesForm
 # Create your views here.
 
 @login_required
-def chat_view(request):
-    chat_room = get_object_or_404(ChatRoom, chat_name = 'chat1')
-    chat_messages = chat_room.chat_messages.all()
-    
+def chat_view(request, chatroom_name='public-chat'):
+    chat_group = get_object_or_404(ChatRoom, group_name=chatroom_name)
+    chat_messages = chat_group.chat_messages.all()
     form = MessagesForm()
     
-    # if request.method == 'POST':
-    #     print(request)
-    #     form = MessagesForm(request.POST)
-    #     if form.is_valid():
-    #         message = form.save(commit=False)
-    #         message.author = request.user
-    #         message.chat = chat_room
-    #         message.save()
+    other_user = None
+    if chat_group.is_private:
+        if request.user not in chat_group.members.all():
+            raise Http404()
+        for member in chat_group.members.all():
+            if member != request.user:
+                other_user = member
+                break
+    
+    if request.htmx:
+        print(request)
+        form = MessagesForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.author = request.user
+            message.chat = chat_group
+            message.save()
             
-    #         context = {
-    #             'message' : message,
-    #             'user' : request.user
-    #         }
+            context = {
+                'message' : message,
+                'user' : request.user
+            }
             
-    #         print('message create')
-    #         return render(request, 'core/chat_message_a.html', context)
-    #     else:
-    #         form = MessagesForm()
+            print('message create')
+            return render(request, 'core/chat_message_a.html', context)
+        else:
+            form = MessagesForm()
             
-    return render(request, 'core/chats.html', {'chat_messages' : chat_messages, 'chat_room' : chat_room, 'form' : form})
+    return render(request, 'core/chats.html', {'chat_messages' : chat_messages, 'chat_group' : chat_group, 'form' : form, 'other_user' : other_user, 'chatroom_name' : chatroom_name})
 
 
 
@@ -54,3 +64,33 @@ def chatSearch(request):
             return JsonResponse({'status': 'success', 'html': html})
     
     return JsonResponse({'status': 'failed', 'error': 'invalid request'}), 400
+
+
+@login_required
+def get_or_create_chatroom(request, username):
+    if request.user.username == username:
+        return redirect('chats')
+    
+    other_user = User.objects.get(username = username)
+    my_chatrooms = request.user.chat_groups.filter(is_private=True)
+    print(my_chatrooms)
+    
+    
+    if my_chatrooms.exists():
+        for chatroom in my_chatrooms:
+            if other_user in chatroom.members.all():
+                chatroom = chatroom
+                break
+            else:
+                chatroom = ChatRoom.objects.create(is_private = True)
+                chatroom.members.add(other_user, request.user)
+    else:
+        chatroom = ChatRoom.objects.create(is_private = True)
+        chatroom.members.add(other_user, request.user)
+        
+    print(chatroom.group_name)
+        
+    return redirect('chatroom', chatroom_name=chatroom.group_name)
+        
+                
+    
