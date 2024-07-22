@@ -71,7 +71,7 @@
         </div>
         <div class="bg-white w-2/3">
             <div class="w-full rounded-lg p-4 flex flex-col justify-between h-full">
-                <ul id='chat_messages' class="flex flex-col-reverse overflow-y-auto p-2 space-y-4 bg-white h-full rounded-lg">
+                <ul id='chat_messages' class="flex flex-col-reverse overflow-y-auto p-2 space-y-4 bg-white h-full rounded-lg overflow-x-hidden">
                     {% for message in chat_messages reversed %}
                         {% include 'core/chat_message.html' %}
                     {% endfor %} 
@@ -84,7 +84,7 @@
                     {% comment %} <input id="messa geInput" type="text" placeholder="Type a message..." class="flex-grow shadow-lg border rounded-l-lg p-2 outline-none"> {% endcomment %}
                     {% csrf_token %} 
                     {{ form }}
-                    <button class="bg-yellow-300 text-black p-2 rounded-r-lg shadow-lg">Send</button>
+                    <button class="bg-yellow-300 text-black p-2 rounded-r-lg shadow-lg w-1/6"><i class="fa-solid fa-paper-plane text-black fa-lg"></i></button>
                 </form>
             </div>  
         </div>
