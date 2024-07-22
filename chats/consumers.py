@@ -14,6 +14,11 @@ class ChatConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_add)(
             self.chatroom_name, self.channel_name
         )
+        
+        if self.user not in self.chatroom.user_online.all():
+            self.chatroom.user_online.add(self.user)
+            self.update_online_user()
+        
         self.accept()
         
         
@@ -21,6 +26,10 @@ class ChatConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_discard)(
             self.chatroom_name, self.channel_name
         )
+        
+        if self.user in self.chatroom.user_online.all():
+            self.chatroom.user_online.remove(self.user)
+            self.update_online_user()
         
     
         
@@ -49,4 +58,22 @@ class ChatConsumer(WebsocketConsumer):
         }
         
         html = render_to_string("core/chat_message_a.html", context=context)
+        self.send(text_data=html)
+        
+    def update_online_user(self):
+        online_users = self.chatroom.user_online.count() -1
+        
+        event = {
+            'type' : 'online_users_handler',
+            'online_users' : online_users
+        }
+        
+        async_to_sync(self.channel_layer.group_send)(
+            self.chatroom_name, event
+        )
+        
+    def online_users_handler(self, event):
+        online_users = event['online_users']
+        
+        html = render_to_string("core/online_users.html", {'online_users' : online_users})
         self.send(text_data=html)

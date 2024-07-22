@@ -11,45 +11,7 @@
                 </div>
             </form>
             <div class="bg-white h-full overflow-scroll" id="chatList">
-                <div class="bg-yellow-300 p-4 text-black rounded-lg shadow-lg flex flex-row mb-4">
-                    <div class="bg-black rounded-full flex justify-center content-center text-white p-4">
-                        img
-                    </div>
-                    <div class="flex flex-col ml-2 justify-center">
-                        <div class="font-bold">
-                            Nazar Svystula
-                        </div>
-                        <div class="text-gray-600">
-                            Last Message
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-yellow-300 p-4 text-black rounded-lg shadow-lg flex flex-row mb-4">
-                    <div class="bg-black rounded-full flex justify-center content-center text-white p-4">
-                        img
-                    </div>
-                    <div class="flex flex-col ml-2 justify-center">
-                        <div class="font-bold">
-                            Nazar Svystula
-                        </div>
-                        <div class="text-gray-600">
-                            Last Message
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-yellow-300 p-4 text-black rounded-lg shadow-lg flex flex-row mb-4">
-                    <div class="bg-black rounded-full flex justify-center content-center text-white p-4">
-                        img
-                    </div>
-                    <div class="flex flex-col ml-2 justify-center">
-                        <div class="font-bold">
-                            Nazar Svystula
-                        </div>
-                        <div class="text-gray-600">
-                            Last Message
-                        </div>
-                    </div>
-                </div> 
+ 
                 <div class="bg-yellow-300 p-4 text-black rounded-lg shadow-lg flex flex-row mb-4">
                     <div class="bg-black rounded-full flex justify-center content-center text-white p-4">
                         img
@@ -58,6 +20,7 @@
                         {% if chat_room %}
                             {{ chat_room.chat_name }}
                         {% endif %}
+                        <div id="online-icon"></div>
                     </div>
                 </div>
                 

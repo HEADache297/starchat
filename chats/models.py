@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class ChatRoom(models.Model):
     chat_name = models.CharField(max_length=244, unique=True)
+    user_online = models.ManyToManyField(User, related_name='user_in_online', blank=True)
     
     def __ste__(self):
         return self.group_chat
