@@ -31,16 +31,14 @@ def signup(request):
                 user,
                 'Activate your user account!',
                 'users/activation.html')
-
-            if email.send():
-                messages.success(request, 'Check your email and confirm your account!')
-                return redirect('login')
-            else:
-                messages.error(request, 'Something went wrong with your email. Try it later...')
-                return redirect('signup')
+            
             print(form.cleaned_data.get('email'))
             print('form save')
-            return redirect('login')
+
+            if email.send():
+                return redirect('login')
+            else:
+                return redirect('signup')
     else:
         form = SignUpForm()
         
@@ -121,3 +119,20 @@ def activate_user(request, uid, token):
     else:
         messages.success(request, "Invalid activation link")
     return redirect('login')
+
+def change_password(request):
+    from .forms import UpdatePasswordForm
+    form = UpdatePasswordForm(request.user)
+    if request.method == 'POST':
+        form = UpdatePasswordForm(request.user, request.POST)
+        if request.method == 'POST':
+            form = UpdatePasswordForm(request.user, request.POST)
+            if form.is_valid():
+                form.save()
+
+                return redirect('login')
+            else:
+                for error in list(form.errors.items()):
+                    messages.error(request, error)
+
+    return render(request, 'users/change_password.html', {'form': form})

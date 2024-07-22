@@ -45,11 +45,16 @@ INSTALLED_APPS = [
     'compressor',
     'user',
     'chats',
+    
+    'crispy_forms',
+    'crispy_tailwind',
 ]
 
 COMPRESS_ROOT = BASE_DIR / 'static'
  
 COMPRESS_ENABLED = True
+
+CRISPY_TEMPLATE_PACK = "tailwind"
  
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
