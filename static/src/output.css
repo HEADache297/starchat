@@ -575,8 +575,8 @@ video {
   bottom: 3.5rem;
 }
 
-.right-32 {
-  right: 8rem;
+.right-16 {
+  right: 4rem;
 }
 
 .z-0 {
@@ -667,6 +667,10 @@ video {
 
 .h-8 {
   height: 2rem;
+}
+
+.h-auto {
+  height: auto;
 }
 
 .h-full {
@@ -789,6 +793,10 @@ video {
 
 .overflow-x-hidden {
   overflow-x: hidden;
+}
+
+.break-words {
+  overflow-wrap: break-word;
 }
 
 .rounded {
