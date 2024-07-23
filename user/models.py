@@ -13,7 +13,7 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.user.email.split('@')[0])
+            self.slug = slugify(self.user.username)
         super().save(*args, **kwargs)
 
     def __str__(self):

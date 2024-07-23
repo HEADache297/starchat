@@ -52,7 +52,7 @@
         </div>
         <div class="bg-white w-2/3">
             <div class="w-full rounded-lg p-4 flex flex-col justify-between h-full">
-                <ul id='chat_messages' class="flex flex-col-reverse overflow-y-auto p-2 space-y-4 bg-white h-full rounded-lg">
+                <ul id='chat_messages' class="flex flex-col-reverse overflow-y-auto p-2 space-y-4 bg-white h-full rounded-lg overflow-x-hidden">
                     {% for message in chat_messages reversed %}
                         {% include 'core/chat_message.html' %}
                     {% endfor %} 
@@ -65,16 +65,39 @@
                     {% comment %} <input id="messa geInput" type="text" placeholder="Type a message..." class="flex-grow shadow-lg border rounded-l-lg p-2 outline-none"> {% endcomment %}
                     {% csrf_token %} 
                     {{ form }}
-                    <button class="bg-yellow-300 text-black p-2 rounded-r-lg shadow-lg">Send</button>
+                    <div onclick="openEmoji()" class="bg-white border-y-[1px] border-r-0 flex items-center justify-center p-2"><i class="fa-regular fa-face-smile fa-lg"></i></div>
+                    <div class="z-10 bg-white border-[1px] w-36 h-8 fixed right-16 bottom-14 rounded-lg hidden">
+                        <div class="flex flex-row w-full justify-center">
+                            <div onclick="insertEmoji('smile')" id="smile" class="m-1">😂</div>
+                            <div onclick="insertEmoji('like')" id='like' class="m-1">👍</div>
+                            <div onclick="insertEmoji('cry')" id="cry" class="m-1">😭</div>
+                            <div onclick="insertEmoji('heart')" id="heart" class="m-1">❤️</div>
+                            <div onclick="insertEmoji('love')" id="love" class="m-1">🥰 </div>
+                        </div>
+                    </div>
+                    <button class="bg-yellow-300 text-black p-2 rounded-r-lg shadow-lg w-1/6"><i class="fa-solid fa-paper-plane fa-lg"></i></button>
                 </form>
             </div>  
         </div>
     </div>
 
 <script type="text/javascript">
+    function openEmoji() {
+        $('.z-10').toggle()
+    }
+
+    function insertEmoji(emoji) {
+        $('.z-10').toggle()
+        let newValue = $(`#${emoji}`).text()
+        let oldValue = $('#inputt').val()
+        let value = oldValue + newValue
+        console.log(value)
+        $('#inputt').val(value)
+    }
 
     $(document).ready(function() {
         $('#id_content').parent().addClass('w-full')
+        $('#inputt').parent().addClass('w-full')
 
         $('#chatSearch').submit(function (event) {
             event.preventDefault()

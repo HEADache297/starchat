@@ -2,7 +2,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +24,7 @@
                     Login
                 </button>
                 <p class="ml-4 mt-2">Don't have an account? Click <a class="text-white underline" href="{% url 'signup' %}">here</a></p>
+                <p class="ml-4 mt-2">Forget password? <a href="{% url  'reset_user_password' %}" class="text-white underline">Reset!</a></p>
             </form>
         </div>
     </body>

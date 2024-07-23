@@ -50,6 +50,8 @@ INSTALLED_APPS = [
 COMPRESS_ROOT = BASE_DIR / 'static'
  
 COMPRESS_ENABLED = True
+
+CRISPY_TEMPLATE_PACK = "tailwind"
  
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
@@ -149,5 +151,10 @@ MEDIA_ROOT = os.path.join(STATIC_URL, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/login'
-LOGIN_URL = '/login'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'pasternakmary08@gmail.com'
+EMAIL_HOST_PASSWORD = 'xrdr ndqw qsra vhne'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'pasternakmary08@gmail.com'
