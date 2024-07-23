@@ -28,9 +28,6 @@ def signup(request):
                 user,
                 'Activate your user account!',
                 'users/activation.html')
-            
-            print(form.cleaned_data.get('email'))
-            print('form save')
 
             if email.send():
                 return redirect('login')
@@ -44,9 +41,7 @@ def signup(request):
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)   
-        if form.is_valid:
-            print(form)
-            print(form.cleaned_data.get('username'))                               
+        if form.is_valid:                              
             
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -59,7 +54,6 @@ def login(request):
             if user is not None:
                 #if user.is_authenticated==True:
                 auth_login(request, user)
-                print(user)
                 return redirect('chats')
     else: 
         form = LoginForm()
@@ -102,7 +96,6 @@ def create_email(request, user, subject: str, html_page: str):
 
 def activate_user(request, uid, token):
     from .token import account_activation_token
-    print('User id:', uid, 'secret token', token)
     try:
         from django.contrib.auth.models import User
         uid = force_str(urlsafe_base64_decode(uid))
@@ -159,11 +152,6 @@ def reset_password(request):
                     'users/password_reset.html'
 
                 )
-
-                if email.send():
-                    print('ok')
-                else:
-                    print('notok')
                 return redirect('login')
 
             else:
