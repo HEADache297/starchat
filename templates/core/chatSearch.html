@@ -1,8 +1,9 @@
 {% for chat in chats %}
+{% if user.username != chat.username %}
+<a href="{% url 'start-chat' chat.username %}">
     <div class="bg-yellow-300 p-4 text-black rounded-lg shadow-lg flex flex-row mb-4">
-        <a href="{% url 'start-chat' chat.username %}"> 
-        <div class="bg-black rounded-full flex justify-center content-center text-white p-4">
-            img
+        <div class="rounded-full flex justify-center content-center text-white">
+            <img src={{ chat.profile.image.url }} alt='img' class="rounded-full h-12 w-12">
         </div>
         
         <div class="flex flex-col ml-2 justify-center">
@@ -13,8 +14,9 @@
                 Last Message
             </div>
         </div>
-        </a>
     </div>
+</a>
+{% endif %}
 {% empty %}
     <div class="text-xl my-2">No such user</div>
 {% endfor %}
