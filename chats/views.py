@@ -59,7 +59,7 @@ def chatSearch(request):
                 chats = User.objects.filter(email__contains=search_data).all()
             else:
                 chats = User.objects.filter(username__contains=search_data).all()
-            html = render_to_string('core/chatSearch.html', {'chats': chats})
+            html = render_to_string('core/chatSearch.html', {'chats': chats, 'user': request.user})
 
             return JsonResponse({'status': 'success', 'html': html})
     
@@ -73,22 +73,41 @@ def get_or_create_chatroom(request, username):
     
     other_user = User.objects.get(username = username)
     my_chatrooms = request.user.chat_groups.filter(is_private=True)
-    print(my_chatrooms)
+    
+    ot_us=''
+    
+    for chat in my_chatrooms:
+        if chat.members.filter(id=other_user.id).exists():
+            ot_us='1'
+            print('one', ot_us)
+            break
+        else:
+            ot_us='2'    
+            print('two00', ot_us) 
+    
     
     
     if my_chatrooms.exists():
+        print('three', ot_us)
         for chatroom in my_chatrooms:
+            print(other_user)
             if other_user in chatroom.members.all():
                 chatroom = chatroom
                 break
             else:
-                chatroom = ChatRoom.objects.create(is_private = True)
-                chatroom.members.add(other_user, request.user)
+                if ot_us=='1':
+                    print('helloooo')
+                    print('three', ot_us)
+                elif ot_us=='2':
+                    print('caht is')
+                    chatroom = ChatRoom.objects.create(is_private = True)
+                    chatroom.members.add(other_user, request.user)
+                    print(chatroom.members.all())
+                    ot_us=''
     else:
         chatroom = ChatRoom.objects.create(is_private = True)
         chatroom.members.add(other_user, request.user)
         
-    print(chatroom.group_name)
         
     return redirect('chatroom', chatroom_name=chatroom.group_name)
         

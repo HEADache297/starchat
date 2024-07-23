@@ -11,28 +11,18 @@
                 </div>
             </form>
             <div class="bg-white h-full overflow-scroll" id="chatList"> 
-                <div class="bg-yellow-300 p-4 text-black rounded-lg shadow-lg flex flex-row mb-4">
-                    <div class="bg-black rounded-full flex justify-center content-center text-white p-4">
-                        img
-                    </div>
-                    <div class="flex flex-col ml-2 justify-center">
-                        {% if chat_group %}
-                            {{ chat_group.group_name }}
-                        {% endif %}
-                        <div id="online-icon"></div>
-                    </div>
-                </div>
+
 
                 {% for chatroom in user.chat_groups.all %}
                     {% if chatroom.is_private %}
                         {% for member in chatroom.members.all %}
                             {% if member != user %}
                             <a href="{% url 'start-chat' member.username %}"> 
-                            <div class="bg-yellow-300 p-4 text-black rounded-lg shadow-lg flex flex-row mb-4">
-                                <div class="bg-black rounded-full flex justify-center content-center text-white p-4">
-                                    img
+                            <div class="{% if member == other_user %} bg-black text-white {% else %}bg-yellow-300 text-black {% endif %} p-4 rounded-lg shadow-lg flex flex-row mb-4">
+                                <div class="rounded-full flex justify-center content-center text-white">
+                                    <img src={{ member.profile.image.url }} alt='img' class="rounded-full h-12 w-12">
                                 </div>
-                                <div class="flex flex-col ml-2 justify-center">
+                                <div class="flex flex-col ml-2 justify-center font-bold">
                                     {{ member.username }}
                                 </div>
                             </div>
@@ -41,12 +31,6 @@
                         {% endfor %}
                     {% endif %}
                 {% endfor %}
-
-
-
-
-
-
             </div>
             <div class="bg-white h-full overflow-scroll hidden" id="chatSearchList"></div>
         </div>
@@ -55,7 +39,7 @@
                 <ul id='chat_messages' class="flex flex-col-reverse overflow-y-auto p-2 space-y-4 bg-white h-full rounded-lg overflow-x-hidden">
                     {% for message in chat_messages reversed %}
                         {% include 'core/chat_message.html' %}
-                    {% endfor %} 
+                    {% endfor %}
                 </ul>
                 <form class="mt-4 flex bottom-0 inset-x-0 mb-16" 
                     hx-ext="ws"
