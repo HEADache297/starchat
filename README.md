@@ -6,7 +6,7 @@
 
 > ## Get template code
 > ```
-> git clone HEADache297/starchat
+> git clone https://github.com/HEADache297/starchat.git
 > ```
 
 > ## Initialize virtual environment
