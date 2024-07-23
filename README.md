@@ -13,7 +13,7 @@
 > ```
 > python -m venv venv // Create venv
 > source venv/bin/activate // Activation for MacOS or Win with CMD
-> .\venv\Scripts\activate.bat // Activation for win with Power Shell
+> .\venv\Scripts\activate // Activation for win with Power Shell
 > ```
 
 > ## Install requirements.txt
