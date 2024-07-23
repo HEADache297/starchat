@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.urls import path
+from django.shortcuts import redirect
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    path('', views.chat_redirect, name='chat-redirect'),
     path('chats/', views.chat_view, name='chats'),
     path('chat/search/', views.chatSearch, name='chatSearch'),
     path('chat/<username>', views.get_or_create_chatroom, name="start-chat"),
