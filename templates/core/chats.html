@@ -45,11 +45,12 @@
                     hx-ext="ws"
                     ws-connect="/ws/chatroom/{{ chatroom_name }}"
                     ws-send
-                    hx-on::after-request="this.reset()">
-                    {% comment %} <input id="messa geInput" type="text" placeholder="Type a message..." class="flex-grow shadow-lg border rounded-l-lg p-2 outline-none"> {% endcomment %}
+                    hx-on::after-request="this.reset()"
+                    id="messageForm">
                     {% csrf_token %} 
                     {{ form }}
-                    <div onclick="openEmoji()" class="bg-white border-y-[1px] border-r-0 flex items-center justify-center p-2"><i class="fa-regular fa-face-smile fa-lg"></i></div>
+                    <div onclick="openFileForm()" class="bg-white border-y-[1px] shadow-b-lg border-r-0 flex items-center justify-center p-2"><i class="fa-regular fa-file fa-lg"></i></i></div>
+                    <div onclick="openEmoji()" class="bg-white border-y-[1px] shadow-b-lg border-r-0 flex items-center justify-center p-2"><i class="fa-regular fa-face-smile fa-lg"></i></div>
                     <div class="z-10 bg-white border-[1px] w-36 h-8 fixed right-16 bottom-14 rounded-lg hidden">
                         <div class="flex flex-row w-full justify-center">
                             <div onclick="insertEmoji('smile')" id="smile" class="m-1">😂</div>
@@ -61,13 +62,32 @@
                     </div>
                     <button class="bg-yellow-300 text-black p-2 rounded-r-lg shadow-lg w-1/6"><i class="fa-solid fa-paper-plane fa-lg"></i></button>
                 </form>
+                <form id="fileForm" enctype="multipart/form-data" class="mt-4 bottom-0 inset-x-0 mb-16 hidden"
+                hx-post="{% url 'chat-file-upload' chat_group.group_name %}"
+                hx-target="#chat_messages"
+                hx-swap="afterbegin"
+                _="on htmx:beforeSend reset me">
+                    {% csrf_token %}
+                    <div class="flex flex-row">
+                        <input type="file" name="file" id="id_file" class="w-full border-r-0 flex-grow shadow-lg border rounded-l-lg p-2 outline-none">
+                        <div onclick="openFileForm()" class="bg-white border-y-[1px] shadow-b-lg border-r-0 flex items-center justify-center p-2"><i class="fa-regular fa-keyboard fa-lg"></i></i></div>
+                        <button type="submit" class="bg-yellow-300 text-black p-2 rounded-r-lg shadow-lg w-1/6"><i class="fa-solid fa-paper-plane fa-lg"></i></button>
+                    </div>
+                </form>
             </div>  
         </div>
     </div>
 
 <script type="text/javascript">
+    let count = 0;
+
     function openEmoji() {
         $('.z-10').toggle()
+    }
+
+    function openFileForm() {
+        $('#messageForm').toggle()
+        $('#fileForm').toggle()
     }
 
     function insertEmoji(emoji) {

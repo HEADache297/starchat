@@ -1,15 +1,23 @@
-
+{% load static %}
 {% if message.author == user %}
 <div class="flex justify-end w-full">
     <div class="flex flex-col w-auto">
-        <div class="bg-yellow-300 p-2 rounded-lg shadow-lg max-w-80 break-words">{{ message.content }}</div>
+        {% if message.content %}
+            <div class="bg-yellow-300 p-2 rounded-lg shadow-lg max-w-80 break-words">{{ message.content }}</div>
+        {% elif message.file %}
+            <img src="{{ message.file.url }}" alt="img" class="max-w-80">
+        {% endif %}
         <div class="text-gray-600 text-sm flex justify-end">{{ message.created }}</div>
     </div>
 </div>       
 {% else %}   
 <div class="flex justify-start w-full">
     <div class="flex flex-col w-auto">
-        <div class="bg-black text-white p-2 rounded-lg shadow-lg max-w-80 break-words">{{ message.content }}</div>
+        {% if message.content %}
+            <div class="bg-black text-white p-2 rounded-lg shadow-lg max-w-80 break-words">{{ message.content }}</div>
+        {% elif message.file %}
+            <img src="{{ message.file.url }}" alt="img" class="max-w-80">
+        {% endif %}
         <div class="text-gray-600 text-sm">{{ message.created }}</div>
     </div>
 </div>    

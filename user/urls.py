@@ -13,4 +13,4 @@ urlpatterns = [
     path('password/reset/<uid>/<token>', views.reset_password_confirm, name='reset_user_password_confirm'),
     path('profile/password/change', views.change_password, name='change_user_password'),
     path('password/reset', views.reset_password, name='reset_user_password'),
-] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
