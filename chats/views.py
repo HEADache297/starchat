@@ -1,9 +1,12 @@
+from asgiref.sync import async_to_sync
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from .models import ChatRoom, Messages
+from channels.layers import get_channel_layer
 from .forms import MessagesForm
 # Create your views here.
 
@@ -91,6 +94,21 @@ def get_or_create_chatroom(request, username):
     print(chatroom.group_name)
         
     return redirect('chatroom', chatroom_name=chatroom.group_name)
+
+@login_required
+def chat_file_upload(request, chatroom_name):
+    chat_group = get_object_or_404(ChatRoom, group_name=chatroom_name)
+
+    if request.htmx and request.FILES:
+        file = request.FILES['file']
+        message = Messages.objects.create(author=request.user, chat=chat_group, file=file)
         
+        chanel_layer = get_channel_layer()
+        event = {
+            'type': 'message_handler',
+            'message_id': message.id,
+        }
+        async_to_sync(chanel_layer.group_send)(chatroom_name, event)
+    return HttpResponse()
                 
     
