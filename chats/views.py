@@ -46,7 +46,9 @@ def chat_view(request, chatroom_name='public-chat'):
             
     return render(request, 'core/chats.html', {'chat_messages' : chat_messages, 'chat_group' : chat_group, 'form' : form, 'other_user' : other_user, 'chatroom_name' : chatroom_name})
 
-
+@login_required
+def chat_redirect(request):
+    return redirect('chat')
 
 @login_required
 def chatSearch(request):

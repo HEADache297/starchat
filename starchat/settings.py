@@ -158,3 +158,6 @@ EMAIL_HOST_PASSWORD = 'xrdr ndqw qsra vhne'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'pasternakmary08@gmail.com'
+
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/login'

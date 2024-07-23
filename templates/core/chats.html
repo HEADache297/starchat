@@ -50,7 +50,7 @@
                     hx-ext="ws"
                     ws-connect="/ws/chatroom/{{ chatroom_name }}"
                     ws-send
-                    _="on htmx:beforeSend reset() me"
+                    _="htmx:AfterSend reset() me"
                     id="messageForm">
                     {% csrf_token %} 
                     {{ form }}
@@ -71,7 +71,7 @@
                 hx-post="{% url 'chat-file-upload' chat_group.group_name %}"
                 hx-target="#chat_messages"
                 hx-swap="afterbegin"
-                _="on htmx:beforeSend reset me">
+                _="on htmx:wsAfterSend reset() me">
                     {% csrf_token %}
                     <div class="flex flex-row">
                         <input type="file" name="file" id="id_file" class="w-full border-r-0 flex-grow shadow-lg border rounded-l-lg p-2 outline-none">

@@ -14,9 +14,6 @@ from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
 
 # Create your views here.
-
-def home(request):
-    return HttpResponse('Home page')
     
 def signup(request):
     if request.method == 'POST':
@@ -68,6 +65,7 @@ def login(request):
         form = LoginForm()
     return render(request, 'auth/login.html', {'form' : form})
 
+@login_required
 def logout(request):
     from django.contrib.auth import logout
     logout(request)
@@ -120,6 +118,7 @@ def activate_user(request, uid, token):
         messages.success(request, "Invalid activation link")
     return redirect('login')
 
+@login_required
 def change_password(request):
     from .forms import UpdatePasswordForm
     form = UpdatePasswordForm(request.user)
