@@ -26,7 +26,6 @@ def chat_view(request, chatroom_name='public-chat'):
                 break
     
     if request.htmx:
-        print(request)
         form = MessagesForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
@@ -39,7 +38,6 @@ def chat_view(request, chatroom_name='public-chat'):
                 'user' : request.user
             }
             
-            print('message create')
             return render(request, 'core/chat_message_a.html', context)
         else:
             form = MessagesForm()
@@ -57,7 +55,6 @@ def chatSearch(request):
     from user.models import User
 
     if request.method == 'POST':
-        print('post')
         search_data = request.POST.get('search')
         if search_data:
             if '@' in search_data:
@@ -84,30 +81,21 @@ def get_or_create_chatroom(request, username):
     for chat in my_chatrooms:
         if chat.members.filter(id=other_user.id).exists():
             ot_us='1'
-            print('one', ot_us)
             break
-        else:
-            ot_us='2'    
-            print('two00', ot_us) 
+        else:   
+            ot_us='2'     
     
     
     
     if my_chatrooms.exists():
-        print('three', ot_us)
         for chatroom in my_chatrooms:
-            print(other_user)
             if other_user in chatroom.members.all():
                 chatroom = chatroom
                 break
             else:
-                if ot_us=='1':
-                    print('helloooo')
-                    print('three', ot_us)
-                elif ot_us=='2':
-                    print('caht is')
+                if ot_us=='2':
                     chatroom = ChatRoom.objects.create(is_private = True)
                     chatroom.members.add(other_user, request.user)
-                    print(chatroom.members.all())
                     ot_us=''
     else:
         chatroom = ChatRoom.objects.create(is_private = True)
