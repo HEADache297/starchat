@@ -33,6 +33,8 @@
                             {% endif %}
                         {% endfor %}
                     {% endif %}
+                {% empty %}    
+                    <div class="text-xl my-2">No chat rooms yet</div>
                 {% endfor %}
             </div>
             <div class="bg-white h-full overflow-scroll hidden" id="chatSearchList"></div>
