@@ -1,6 +1,6 @@
 # **StarChat**
 
-> ## [.pdf with project info](https://docs.google.com/presentation/d/1IxLKEkkMSdfmdXXzC8tCz9FxbbAN-ZpojtJc9IcteK4/edit?usp=sharing)
+> ## [PDF with project info](https://docs.google.com/presentation/d/1IxLKEkkMSdfmdXXzC8tCz9FxbbAN-ZpojtJc9IcteK4/edit?usp=sharing)
 
 > ## Requirements
 > ### 1. Install [Python](https://www.python.org/downloads/)
