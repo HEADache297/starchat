@@ -46,7 +46,7 @@ def chat_view(request, chatroom_name='public-chat'):
 
 @login_required
 def chat_redirect(request):
-    return redirect('chat')
+    return redirect('chats')
 
 @login_required
 def chatSearch(request):
